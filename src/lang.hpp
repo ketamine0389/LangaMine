@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-    cout << "no errors?\n";
+    std::cout << "no errors?\n";
     return 0;
 }
 
@@ -34,21 +34,20 @@ class Error
 const char T_NUM[4] = "num";
 const char T_ID[3] = "id";
 const char T_OP[3] = "op";
-const char T_CHAR[5] = "char";
 
 class Token 
 {
     public:
-        string printableForm();
+        std::string printableForm();
         Token( void );
-        Token( char v[5], char tt[5] );
+        Token( char v[4], char tt[4] );
     private:
         char* tokenType;
         bool b;
         char* value;
 };
 
-Token::Token( char v[5], char tt[5] )
+Token::Token( char v[4], char tt[4] )
 {
     b = true;
     value = v;
@@ -100,26 +99,39 @@ void Lexer::makeTokens()
 
     while(this->currentChar != '\0')
     {
-        bool b = false;
         // digits
         for(int i = 0; i < DIGITS.length(); i++)
         {
             if(currentChar == DIGITS[i])
             {
                 tokens.append(makeNum());
-                b = true;
+                advance();
             }
         }
 
         // operators
+        for(int i = 0; i < OPERATORS.length(); i++)
+        {
+            if(currentChar == OPERATORS[i])
+            {
+                tokens.append(Token(T_OP), currentChar);
+                advance();
+            }
+        }
+
+        // operands
         /*
-
-
-         * left off here lol
-
-
-        */
+         * operand code here
+         */
     }
+}
+
+void Lexer::makeNum()
+{
+    std::string num;
+    int dotCount = 0;
+
+    while(this->currentChar != '\0')
 }
 
 //////////////////////////////////////
