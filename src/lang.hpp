@@ -10,6 +10,24 @@ int main()
 }
 
 //////////////////////////////////////
+// CONSTANTS (not tokens) ////////////
+//////////////////////////////////////
+
+const char DIGITS[11] = "0123456789";
+const char OPERATORS[11] = "+-*/()[]{}";
+//const char OPERANDS[] = "" 
+// ^ make 2 dimen for && || and so on
+
+//////////////////////////////////////
+// ERRORS ////////////////////////////
+//////////////////////////////////////
+
+class Error
+{
+    //stub
+};
+
+//////////////////////////////////////
 // TOKENS ////////////////////////////
 //////////////////////////////////////
 
@@ -42,6 +60,65 @@ string Token::printableForm()
     if(value)
     {
         return ( "%5s: %5s", tokenType, value );
+    }
+}
+
+//////////////////////////////////////
+// LEXER /////////////////////////////
+//////////////////////////////////////
+
+class Lexer
+{
+    public:
+        Lexer( char t[16] );
+        void advance();
+        void makeTokens();
+        void makeNum();
+    private:
+        char* text;
+        int pos = -1;
+        char currentChar = '\0';
+};
+
+Lexer::Lexer( char t[16] )
+{
+    text = t;
+}
+
+void Lexer::advance()
+{
+    pos += 1;
+    if(pos < size_t(text))
+    {
+        currentChar = text[pos];
+    }
+}
+
+void Lexer::makeTokens()
+{
+    std::string tokens = {};
+
+    while(this->currentChar != '\0')
+    {
+        bool b = false;
+        // digits
+        for(int i = 0; i < DIGITS.length(); i++)
+        {
+            if(currentChar == DIGITS[i])
+            {
+                tokens.append(makeNum());
+                b = true;
+            }
+        }
+
+        // operators
+        /*
+
+
+         * left off here lol
+
+
+        */
     }
 }
 
